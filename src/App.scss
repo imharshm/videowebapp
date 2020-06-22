@@ -1,0 +1,262 @@
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+@import "~bootstrap/scss/bootstrap";
+
+$breakpoint-medium-devices: 768px;
+@mixin max-sm {
+  @media (max-width: $breakpoint-medium-devices) {
+    @content;
+  }
+}
+
+.App {
+  background-color: #efefef;
+  height: 100vh;
+  overflow: auto;
+  .App-header {
+    padding-left: 95px;
+    padding-right: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include max-sm() {
+      flex-wrap: wrap;
+    }
+    .title {
+      font-weight: 400;
+      color: #333333;
+      margin: 0;
+      span {
+        color: #000000;
+        font-weight: bold;
+      }
+    }
+    .date-time {
+      span {
+        &:nth-child(1) {
+          color: #8a8a8a;
+        }
+      }
+    }
+    .user-name {
+      .search-option {
+        border-left: 1px solid #9c9c9c;
+        padding: 0 10px;
+        margin-left: 5px;
+      }
+    }
+  }
+  .main-content {
+    height: calc(100vh - 50px);
+    overflow: auto;
+    padding-left: 95px;
+    padding-right: 10px;
+    .nav-tabs {
+      border: 0;
+      margin: 1rem 0;
+      .nav-link {
+        color: #000000;
+        cursor: pointer;
+        border: 0;
+        font-size: 14px;
+        padding: 0.2rem 1rem;
+        border-radius: 5px;
+        &.active {
+          background-color: #fcbc02;
+          color: #ffffff;
+        }
+        &:focus {
+          outline: 0;
+        }
+      }
+      .sort-options {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        .dropdown-toggle {
+          background-color: transparent !important;
+          font-size: 12px;
+          color: #000000;
+          border-color: #cececedd;
+        }
+      }
+    }
+    .tab-content {
+      .tab-pane {
+        .movie-card {
+          display: flex;
+          background: #fcbc02;
+          padding: 10px;
+          border-radius: 5px;
+          color: #fff;
+          margin-right: 1rem;
+          height: 100%;
+          @include max-sm() {
+            margin-right: 0;
+          }
+          .card-name {
+            flex: 0 0 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .movie-image {
+            flex: 0 0 35%;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        .small-card {
+          @include max-sm() {
+            margin-top: 10px;
+          }
+          .small-movie-card {
+            border-radius: 5px;
+            margin: 0 1rem;
+            background: #ffffff;
+            padding: 10px;
+            .movie-img {
+              height: 200px;
+              background: #fcbc02;
+              padding: 5px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .movie-name {
+              margin-top: 5px;
+              .h3 {
+                font-size: 20px;
+              }
+            }
+          }
+          @include max-sm() {
+            &:nth-child(even) {
+              .small-movie-card {
+                margin: 0;
+                margin-right: 0.5rem;
+              }
+            }
+            &:nth-child(odd) {
+              .small-movie-card {
+                margin: 0;
+                margin-left: 0.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+    .season-list {
+      margin-top: 4rem;
+      .season-card {
+        padding: 0;
+        .season-content {
+          background: #ffffff;
+          padding: 10px;
+          border-radius: 10px;
+          margin: 1rem 10px;
+          .season-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .season-name {
+              font-weight: normal;
+              font-size: 20px;
+            }
+            .imdb {
+              background-color: #444444;
+              border-radius: 5px;
+              color: #ffffff;
+              font-weight: bold;
+              font-size: 14px;
+              display: inline-block;
+              padding: 0px 4px;
+            }
+          }
+          .rating-view {
+            .rating-circle {
+              width: 110px;
+              height: 110px;
+              margin: 0 auto;
+              margin-bottom: 12px;
+              .active-border {
+                position: relative;
+                text-align: center;
+                width: 110px;
+                height: 110px;
+                border-radius: 100%;
+                background-color: #fcbc02;
+                background-image: linear-gradient(275deg, transparent 68%, #dddddd 0%),
+                  linear-gradient(0deg, #dddddd 0%, transparent 0%);
+                .circle {
+                  position: relative;
+                  top: 5px;
+                  left: 5px;
+                  text-align: center;
+                  width: 100px;
+                  height: 100px;
+                  border-radius: 100%;
+                  background-color: #ffffff;
+                  .prec {
+                    top: 30px;
+                    position: relative;
+                    font-size: 30px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #484848;
+    width: 80px;
+    height: 100vh;
+    z-index: 9;
+    .sidebar-option {
+      border: 0;
+      margin-top: 5rem;
+      &:last-child {
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+      .nav-item {
+        cursor: pointer;
+        color: #b5b5b5;
+        text-align: center;
+        margin-bottom: 1rem;
+        width: 100%;
+        .nav-link {
+          border: 0;
+          font-size: 14px;
+          padding: 0.25rem 0.5rem;
+          .fa {
+            display: block;
+            font-size: 2rem;
+          }
+          &:hover,
+          &:focus,
+          &.active {
+            background: transparent;
+            border: 0;
+            color: #fcbc02;
+          }
+        }
+      }
+    }
+  }
+}
