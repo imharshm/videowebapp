@@ -1,6 +1,8 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 @import "~bootstrap/scss/bootstrap";
+@import '~font-awesome/scss/_variables.scss';
+@import '~font-awesome/scss/font-awesome.scss';
 
 $breakpoint-medium-devices: 768px;
 @mixin max-sm {

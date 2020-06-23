@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import {
@@ -20,18 +20,45 @@ import mrRobot from "../src/images/mrrobot.jpg";
 const App = (props) => {
   const [activeTab, setActiveTab] = useState("1");
   const [activemaintab, setActiveMainTab] = useState("home");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+
+  const getData = (i) => {
+    if (!i) i = "tt0944947";
+    fetch(` http://www.omdbapi.com/?i=${i}&apikey=ab159589`, {
+      method: "GET",
+      headers: new Headers({
+        Accept: "application/vnd.github.cloak-preview",
+      }),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        response.totalSeasons=parseInt(response.totalSeasons);
+        setData(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
+
   const toggleMainTab = (tab) => {
     if (activemaintab !== tab) setActiveMainTab(tab);
+    getData();
   };
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen((prevStateDrop) => !prevStateDrop);
+  const DATE_OPTIONS = { day: "numeric", month: "short", hour: "numeric", minute: "numeric" };
+ 
 
   return (
     <div className="App">
@@ -41,9 +68,9 @@ const App = (props) => {
         </h1>
         <div className="date-time">
           <span className="mr-1">
-            <i className="fa fa-clock-o mr-1"></i>02 March,
+            <i className="fa fa-clock-o mr-1"></i>
+            {new Date().toLocaleDateString("en-US", DATE_OPTIONS)}
           </span>
-          <span>21:30</span>
         </div>
         <div className="user-name">
           User Name <i className="fa fa-user"></i>
@@ -111,7 +138,7 @@ const App = (props) => {
                     toggle("1");
                   }}
                 >
-                  More Series
+                  My Series
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -125,12 +152,15 @@ const App = (props) => {
                 </NavLink>
               </NavItem>
               <div className="sort-options">
-                <span className="mr-2">Sort By:</span>
+                <span className="mr-2">Sort :</span>
                 <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-                  <DropdownToggle caret>Dropdown</DropdownToggle>
+                  <DropdownToggle caret>Select</DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>Option 1</DropdownItem>
-                    <DropdownItem>Option 2</DropdownItem>
+                    <DropdownItem>A to Z</DropdownItem>
+                    <DropdownItem>Z to A</DropdownItem>
+                    <DropdownItem>Rating(Low to High)</DropdownItem>
+                    <DropdownItem>Rating(High to Low)</DropdownItem>
+
                   </DropdownMenu>
                 </Dropdown>
               </div>
@@ -142,21 +172,37 @@ const App = (props) => {
                     <div className="game-of-thromes movie-card">
                       <div className="card-name">
                         <div>
-                          <h3>Game Of Thrones</h3>
-                          <span className="h5">8 Seasons</span>
-                          <span className="h5">73 Episodes</span>
+                          <h3>{data.Title}</h3>
+                          <span className="h5">{data.totalSeasons} Seasons</span>
+                          <span className="h5">{data.episodes ? data.episodes : ""}</span>
                         </div>
                         <div className="rating-section">
-                          <p className="m-0">iMDB Rating: 9.5/10</p>
+                          <p className="m-0">iMDB Rating:{data.imdbRating}/10</p>
                           <p className="m-0">Go to iMDB Page</p>
                         </div>
                       </div>
                       <div className="movie-image">
-                        <img alt="movie" src={gamesOfThrones} />
+                        <img
+                          alt="movie"
+                          src={
+                            data
+                              ? data.Title === "Game of Thrones"
+                                ? gamesOfThrones
+                                : data.Title === "Archer"
+                                ? archer
+                                : mrRobot
+                              : gamesOfThrones
+                          }
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className="col-6 col-md-3 col-xl-2 p-0 small-card">
+                  <div
+                    className="col-6 col-md-3 col-xl-2 p-0 small-card"
+                    onClick={() => {
+                      getData("tt1486217");
+                    }}
+                  >
                     <div className="small-movie-card">
                       <div className="movie-img">
                         <img alt="movie" src={archer} />
@@ -169,7 +215,12 @@ const App = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6 col-md-3 col-xl-2 p-0 small-card">
+                  <div
+                    className="col-6 col-md-3 col-xl-2 p-0 small-card"
+                    onClick={() => {
+                      getData("tt4158110");
+                    }}
+                  >
                     <div className="small-movie-card">
                       <div className="movie-img">
                         <img alt="movie" src={mrRobot} />
@@ -183,151 +234,27 @@ const App = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="season-list row mx-n2 ">
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 1</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
+                <div className="season-list row mx-n2 ">                
+                  {[...Array(data.totalSeasons)].map((e, i) => (
+                    <div className="season-card col-12 col-md-4 col-xl-2">
+                      <div className="season-content">
+                        <div className="season-details">
+                          <span className="season-name">Season{i}</span>
+                          <span className="imdb">IMDb</span>
+                        </div>
+                        <div className="rating-view">
+                          <span>Rating:</span>
+                          <div className="rating-circle ">
+                            <div className="active-border">
+                              <div className="circle">
+                                <span className="prec">{data.imdbRating}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 2</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 3</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 4</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 5</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 6</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 7</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="season-card col-12 col-md-4 col-xl-2">
-                    <div className="season-content">
-                      <div className="season-details">
-                        <span className="season-name">Season 8</span>
-                        <span className="imdb">IMDb</span>
-                      </div>
-                      <div className="rating-view">
-                        <span>Rating:</span>
-                        <div className="rating-circle ">
-                          <div className="active-border">
-                            <div className="circle">
-                              <span className="prec">7.6</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </TabPane>
               <TabPane tabId="2"></TabPane>
