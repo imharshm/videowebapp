@@ -37,7 +37,7 @@ const App = (props) => {
     <div className="App">
       <header className="App-header">
         <h1 className="title">
-          Watch<span>This</span>
+          Watch <span>This</span>
         </h1>
         <div className="date-time">
           <span className="mr-1">
