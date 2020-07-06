@@ -26,7 +26,6 @@ const App = (props) => {
     getData();
   }, []);
 
-
   const getData = (i) => {
     if (!i) i = "tt0944947";
     fetch(` http://www.omdbapi.com/?i=${i}&apikey=ab159589`, {
@@ -37,17 +36,15 @@ const App = (props) => {
     })
       .then((res) => res.json())
       .then((response) => {
-        response.totalSeasons=parseInt(response.totalSeasons);
+        response.totalSeasons = parseInt(response.totalSeasons);
         setData(response);
       })
       .catch((error) => console.log(error));
   };
 
-
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
 
   const toggleMainTab = (tab) => {
     if (activemaintab !== tab) setActiveMainTab(tab);
@@ -58,7 +55,6 @@ const App = (props) => {
 
   const toggleDropdown = () => setDropdownOpen((prevStateDrop) => !prevStateDrop);
   const DATE_OPTIONS = { day: "numeric", month: "short", hour: "numeric", minute: "numeric" };
- 
 
   return (
     <div className="App">
@@ -160,7 +156,6 @@ const App = (props) => {
                     <DropdownItem>Z to A</DropdownItem>
                     <DropdownItem>Rating(Low to High)</DropdownItem>
                     <DropdownItem>Rating(High to Low)</DropdownItem>
-
                   </DropdownMenu>
                 </Dropdown>
               </div>
@@ -234,12 +229,12 @@ const App = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="season-list row mx-n2 ">                
+                <div className="season-list row mx-n2 ">
                   {[...Array(data.totalSeasons)].map((e, i) => (
                     <div className="season-card col-12 col-md-4 col-xl-2">
                       <div className="season-content">
                         <div className="season-details">
-                          <span className="season-name">Season{i}</span>
+                          <span className="season-name">Season {i + 1}</span>
                           <span className="imdb">IMDb</span>
                         </div>
                         <div className="rating-view">
