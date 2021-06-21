@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/video-player-in-react/static/css/main.917504af.chunk.css",
+    "main.js": "/video-player-in-react/static/js/main.1ea56a1e.chunk.js",
+    "main.js.map": "/video-player-in-react/static/js/main.1ea56a1e.chunk.js.map",
+    "runtime-main.js": "/video-player-in-react/static/js/runtime-main.d7b214cc.js",
+    "runtime-main.js.map": "/video-player-in-react/static/js/runtime-main.d7b214cc.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/video-player-in-react/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.ba22349a.chunk.js": "/video-player-in-react/static/js/2.ba22349a.chunk.js",
+    "static/js/2.ba22349a.chunk.js.map": "/video-player-in-react/static/js/2.ba22349a.chunk.js.map",
+    "index.html": "/video-player-in-react/index.html",
+    "precache-manifest.0326905cd5957beebaf008212ea190d1.js": "/video-player-in-react/precache-manifest.0326905cd5957beebaf008212ea190d1.js",
+    "service-worker.js": "/video-player-in-react/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/video-player-in-react/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.917504af.chunk.css.map": "/video-player-in-react/static/css/main.917504af.chunk.css.map",
+    "static/js/2.ba22349a.chunk.js.LICENSE.txt": "/video-player-in-react/static/js/2.ba22349a.chunk.js.LICENSE.txt",
+    "static/media/archer.jpg": "/video-player-in-react/static/media/archer.2eadac8a.jpg",
+    "static/media/App.scss": "/video-player-in-react/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/games-of-thrones.jpg": "/video-player-in-react/static/media/games-of-thrones.85d559bc.jpg",
+    "static/media/mrrobot.jpg": "/video-player-in-react/static/media/mrrobot.07ae284b.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d7b214cc.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.ba22349a.chunk.js",
+    "static/css/main.917504af.chunk.css",
+    "static/js/main.1ea56a1e.chunk.js"
+  ]
+}
